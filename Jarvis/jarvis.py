@@ -33,7 +33,7 @@ def wishMe():
     else:
         speak("Good Evening!")
 
-    speak("I'm Jarvis. PLease tell me how may I help you?")
+    # speak("I'm Jarvis. PLease tell me how may I help you?")
 
 def takeCommand():
     '''
@@ -43,18 +43,21 @@ def takeCommand():
     with sr.Microphone() as source:
         print("Listening....")
         sr.energy_threshold = 300
-        r.pause_threshold = 1 #Time taken tom complete a phrase as second.
+        r.pause_threshold = 0.8 #Time taken tom complete a phrase as second.
         audio = r.listen(source)
     try:
         print("Recognising...")
+        speak("Recognising")
         query = ''
         query = r.recognize_google(audio)
         print(f"User said: {query}\n")
+        return query
     except Exception as e:
         print(e)
         print("Say that again please...")
-        return "None"
-    return query
+        speak("Say that again please")
+        return 'none'
+
 if __name__=="__main__":
     wishMe()
     while True:
@@ -69,28 +72,21 @@ if __name__=="__main__":
             speak("According to wikipedia")
             print(results)
             speak(results)
-            query = query.replace(query, "")
 
-        elif 'open youtube' or 'youtube' in query:
-            webbrowser.open("youtube.com")
-            query = query.replace(query, "")
-
-        elif 'open google' or 'google' in query:
+        elif 'google' in query:
             webbrowser.open("google.com")
-            query = query.replace(query, "")
-        elif 'open fcebook' or 'fcebook' in query:
-            webbrowser.open("fcebook.com")
-            query = query.replace(query, "")
-        elif 'open stackoverflow' or 'stackoverflow' in query:
+        elif 'youtube' in query:
+            webbrowser.open("youtube.com")
+        elif 'facebook' in query:
+            webbrowser.open("facebook.com")
+        elif 'stackoverflow' or 'stack overflow' in query:
             webbrowser.open("stackoverflow.com")
-            query = query.replace(query, "")
-        elif 'open twitter' or 'twitter' in query:
+        elif 'twitter' in query:
             webbrowser.open("twitter.com")
-            query = query.replace(query, "")
-        elif 'open github' or 'github' in query:
+        elif 'github' in query:
             webbrowser.open("github.com")
-            query = query.replace(query, "")
-
+        elif 'exit' or 'cancel' or 'stop' in query:
+            exit()
 
         #Action
         elif 'play music' or 'music' in query:
