@@ -35,8 +35,8 @@ def wishMe():
     else:
         speak("Good Evening!")
 
-    print("I'm Jarvis. PLease tell me how may I help you?")
-    speak("I'm Jarvis. PLease tell me how may I help you?")
+    # print("I'm Jarvis. PLease tell me how may I help you?")
+    # speak("I'm Jarvis. PLease tell me how may I help you?")
 
 def takeCommand():
     '''
@@ -48,24 +48,28 @@ def takeCommand():
         sr.energy_threshold = 300
         r.pause_threshold = 0.8 #Time taken tom complete a phrase as second.
         audio = r.listen(source)
-        try:
-            print("Recognising...")
-            speak("Recognising")
-            query = r.recognize_google(audio)
-            print(f"User said: {query}\n")
-            return query
-        except Exception as e:
-            print(e)
-            print("Say that again please...")
-            speak("Say that again please")
-            query = 'Error'
-            return query
+    
+    print("Recognising...")
+    speak("Recognising")
+    query = r.recognize_google(audio)
+    print(f"Command: {query}\n")
+    return query
+    # except Exception as e:
+    #     print(e)
+    #     print("Say that again please...")
+    #     speak("Say that again please")
+    #     return "none"
 
 if __name__=="__main__":
     wishMe()
+
     while True:
-        query = takeCommand().lower() #Converts it in lower case string                                                                                                                                         
+        try:
+            query = takeCommand().lower() #Converts it in lower case string                                                                                                                                         
         #Logic for executing tasks based on query
+        except Exception as e:
+            query = 'none'
+            speak("Say that again please")
 
 
         #Browsing Section
@@ -79,27 +83,38 @@ if __name__=="__main__":
 
         elif 'google' in query:
             webbrowser.open("google.com")
+            del query
         elif 'youtube' in query:
             webbrowser.open("youtube.com")
+            del query
         elif 'facebook' in query:
             webbrowser.open("facebook.com")
-        elif 'stackoverflow' or 'stack overflow' in query:
+            del query
+        elif 'stackoverflow' in query:
             webbrowser.open("stackoverflow.com")
+            del query
         elif 'twitter' in query:
             webbrowser.open("twitter.com")
+            del query
         elif 'github' in query:
             webbrowser.open("github.com")
-        elif 'error' in query:
-            print("Say that again please...")
-        elif 'exit' or 'cancel' or 'stop' in query:
-            exit()
-
+            del query
         #Action
-        elif 'play music' or 'music' in query:
+        elif 'music' in query:
             music_dir = 'D:\\Audio\\Rock Music'
             songs = os.listdir(music_dir)
             print(songs)
+            del query
 
+        elif 'exit' or 'cancel' or 'stop' in query:
+            exit()
+        
+        elif 'copy file' in query:
+            pass
+        
+        
+        else:
+            print("Say that again please...")
 
 
 
