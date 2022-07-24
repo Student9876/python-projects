@@ -27,13 +27,16 @@ def wishMe():
     '''
     hour = int(datetime.datetime.now().hour)
     if hour >=0 and hour <=12:
+        print("Good Morning!")
         speak("Good Morning!")
     elif hour >=12 and hour <=18:
+        print("Good Afternoon!")
         speak("Good Afternoon!")
     else:
         speak("Good Evening!")
 
-    # speak("I'm Jarvis. PLease tell me how may I help you?")
+    print("I'm Jarvis. PLease tell me how may I help you?")
+    speak("I'm Jarvis. PLease tell me how may I help you?")
 
 def takeCommand():
     '''
@@ -45,25 +48,26 @@ def takeCommand():
         sr.energy_threshold = 300
         r.pause_threshold = 0.8 #Time taken tom complete a phrase as second.
         audio = r.listen(source)
-    try:
-        print("Recognising...")
-        speak("Recognising")
-        query = ''
-        query = r.recognize_google(audio)
-        print(f"User said: {query}\n")
-        return query
-    except Exception as e:
-        print(e)
-        print("Say that again please...")
-        speak("Say that again please")
-        return 'none'
+        try:
+            print("Recognising...")
+            speak("Recognising")
+            query = r.recognize_google(audio)
+            print(f"User said: {query}\n")
+            return query
+        except Exception as e:
+            print(e)
+            print("Say that again please...")
+            speak("Say that again please")
+            query = 'Error'
+            return query
 
 if __name__=="__main__":
     wishMe()
     while True:
         query = takeCommand().lower() #Converts it in lower case string                                                                                                                                         
         #Logic for executing tasks based on query
-        
+
+
         #Browsing Section
         if 'wikipedia' in query:
             speak('Searching Wikipedia...')
@@ -85,6 +89,8 @@ if __name__=="__main__":
             webbrowser.open("twitter.com")
         elif 'github' in query:
             webbrowser.open("github.com")
+        elif 'error' in query:
+            print("Say that again please...")
         elif 'exit' or 'cancel' or 'stop' in query:
             exit()
 
