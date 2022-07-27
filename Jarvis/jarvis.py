@@ -1,10 +1,12 @@
+import cProfile
+import codeop
 import pyttsx3
 import speech_recognition as sr
 import datetime
 import wikipedia
 import webbrowser
 import os
-
+import smtplib
 
 
 engine = pyttsx3.init('sapi5')
@@ -37,6 +39,15 @@ def wishMe():
 
     # print("I'm Jarvis. PLease tell me how may I help you?")
     # speak("I'm Jarvis. PLease tell me how may I help you?")
+def sendEmail(to, content):  #we will be using smtplib, a preinstalled library used to send emails
+    #And we have to use "less secure apps" on gmail
+    with open('/python-projects/log_pass.txt' as 'r') as f:
+        password = f.read()
+    server = smtplib.SMTP('smntp.gmail.com', 500)
+    server.ehlo()
+    server.starttls()
+    server.login('iamjervis0000@gmail.com', 'password')
+
 
 def takeCommand():
     '''
@@ -44,6 +55,7 @@ def takeCommand():
     '''
     r = sr.Recognizer()
     with sr.Microphone() as source:
+        r.adjust_for_ambient_noise(source)
         print("Listening....")
         sr.energy_threshold = 300
         r.pause_threshold = 0.8 #Time taken tom complete a phrase as second.
@@ -101,20 +113,35 @@ if __name__=="__main__":
             del query
         #Action
         elif 'music' in query:
-            music_dir = 'D:\\Audio\\Rock Music'
+            music_dir = 'D:\\Audio\\Rock Music'     #need to add stop and next music functionality
             songs = os.listdir(music_dir)
             print(songs)
             del query
-
-        elif 'exit' or 'cancel' or 'stop' in query:
-            exit()
         
         elif 'copy file' in query:
             pass
         
-        
+        elif 'the time' in query:
+            strTime = datetime.datetime.now().strftime("%H:%M:%S")
+            speak(f"Sir the time is {strTime}")
+
+        elif 'open vs code' in query:
+            codePath = "C:\\Users\\Shouv\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+            os.startfile(codePath)
+
+        elif 'email to pain' in query:
+            try:
+                speak("What should I say:")
+                content = takeCommand()
+                to = "iam789souvik@gmail.com"
+                sendEmail(to, content)
+                speak("Email has been sent!!")
+            except Exception as e:
+                print(e)
+                speak("I'm Sorry")
         else:
             print("Say that again please...")
+
 
 
 
