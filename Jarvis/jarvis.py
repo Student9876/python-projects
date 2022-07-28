@@ -1,5 +1,6 @@
 import cProfile
 import codeop
+from sqlite3 import connect
 import pyttsx3
 import speech_recognition as sr
 import datetime
@@ -37,16 +38,18 @@ def wishMe():
     else:
         speak("Good Evening!")
 
-    # print("I'm Jarvis. PLease tell me how may I help you?")
-    # speak("I'm Jarvis. PLease tell me how may I help you?")
-def sendEmail(to, content):  #we will be using smtplib, a preinstalled library used to send emails
-    #And we have to use "less secure apps" on gmail
-    with open('/python-projects/log_pass.txt' as 'r') as f:
-        password = f.read()
-    server = smtplib.SMTP('smntp.gmail.com', 500)
-    server.ehlo()
-    server.starttls()
-    server.login('iamjervis0000@gmail.com', 'password')
+    print("I'm Jarvis. PLease tell me how may I help you?")
+    speak("I'm Jarvis. PLease tell me how may I help you?")
+# def sendEmail(to, content):  #we will be using smtplib, a preinstalled library used to send emails
+#     #And we have to use "less secure apps" on gmail. Google does not supports this
+#     with open('/python-projects/log_pass.txt', 'r') as f:
+#         password = f.read()
+#     server = smtplib.SMTP('smntp.gmail.com', 500)
+#     server.ehlo()
+#     server.starttls()
+#     server.login(f'iamjervis0000@gmail.com', '{password}')
+#     server.sendmail('iamjervis0000@gmail.com', to, content)
+#     server.close()
 
 
 def takeCommand():
@@ -128,19 +131,24 @@ if __name__=="__main__":
         elif 'open vs code' in query:
             codePath = "C:\\Users\\Shouv\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
             os.startfile(codePath)
+        elif 'exit' or 'cancel' or 'quite' in query:
+            exit()
+        
 
-        elif 'email to pain' in query:
-            try:
-                speak("What should I say:")
-                content = takeCommand()
-                to = "iam789souvik@gmail.com"
-                sendEmail(to, content)
-                speak("Email has been sent!!")
-            except Exception as e:
-                print(e)
-                speak("I'm Sorry")
+        # elif 'email to pain' in query:
+        #     try:
+        #         speak("What should I say:")
+        #         content = takeCommand()
+        #         to = "iam789souvik@gmail.com"
+        #         sendEmail(to, content)
+        #         speak("Email has been sent!!")
+        #     except Exception as e:
+        #         print(e)
+        #         speak("I'm Sorry")
         else:
             print("Say that again please...")
+            speak("Say that again please...")
+            
 
 
 
