@@ -1,13 +1,9 @@
-import cProfile
-import codeop
-from sqlite3 import connect
 import pyttsx3
 import speech_recognition as sr
 import datetime
 import wikipedia
 import webbrowser
 import os
-import smtplib
 
 
 engine = pyttsx3.init('sapi5')
@@ -40,16 +36,6 @@ def wishMe():
 
     print("I'm Jarvis. PLease tell me how may I help you?")
     speak("I'm Jarvis. PLease tell me how may I help you?")
-# def sendEmail(to, content):  #we will be using smtplib, a preinstalled library used to send emails
-#     #And we have to use "less secure apps" on gmail. Google does not supports this
-#     with open('/python-projects/log_pass.txt', 'r') as f:
-#         password = f.read()
-#     server = smtplib.SMTP('smntp.gmail.com', 500)
-#     server.ehlo()
-#     server.starttls()
-#     server.login(f'iamjervis0000@gmail.com', '{password}')
-#     server.sendmail('iamjervis0000@gmail.com', to, content)
-#     server.close()
 
 
 def takeCommand():
@@ -69,11 +55,6 @@ def takeCommand():
     query = r.recognize_google(audio)
     print(f"Command: {query}\n")
     return query
-    # except Exception as e:
-    #     print(e)
-    #     print("Say that again please...")
-    #     speak("Say that again please")
-    #     return "none"
 
 if __name__=="__main__":
     wishMe()
@@ -126,7 +107,9 @@ if __name__=="__main__":
         
         elif 'the time' in query:
             strTime = datetime.datetime.now().strftime("%H:%M:%S")
+            print(f"Sir the time is {strTime}")
             speak(f"Sir the time is {strTime}")
+
 
         elif 'open vs code' in query:
             codePath = "C:\\Users\\Shouv\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
@@ -134,17 +117,6 @@ if __name__=="__main__":
         elif 'exit' or 'cancel' or 'quite' in query:
             exit()
         
-
-        # elif 'email to pain' in query:
-        #     try:
-        #         speak("What should I say:")
-        #         content = takeCommand()
-        #         to = "iam789souvik@gmail.com"
-        #         sendEmail(to, content)
-        #         speak("Email has been sent!!")
-        #     except Exception as e:
-        #         print(e)
-        #         speak("I'm Sorry")
         else:
             print("Say that again please...")
             speak("Say that again please...")
