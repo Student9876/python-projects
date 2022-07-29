@@ -114,6 +114,9 @@ if __name__=="__main__":
         elif 'open vs code' in query:
             codePath = "C:\\Users\\Shouv\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
             os.startfile(codePath)
+
+        elif 'set alarm' in query:
+            pass
         elif 'exit' or 'cancel' or 'quite' in query:
             exit()
         
